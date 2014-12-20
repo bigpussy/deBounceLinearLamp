@@ -1,2 +1,7 @@
 *.uvproj
 *.plg
+*.LST
+*.OBJ
+*.M51
+*.lnp
+out*
