@@ -1,7 +1,7 @@
 /*********************************************************************************************
-程序名： 　　 
+程序名： 　杨超　 
 编写人： 　　 　
-编写时间：　 年 月 日
+编写时间：　 2014年 12月 20日
 硬件支持：　　
 接口说明：　　  
 修改日志：　　
@@ -40,16 +40,23 @@ void main(void){
 	while(1){
 		millis ++; //增加一个计时器，每次脉冲都加一
 		reading = BTN;
+		//每次先判断一下读取的端口和上次的读取是否一致
 		if(reading != lastBtnState){
+			//不一致，说明按键正在处于抖动状态
 			lastDebounceTime = millis;
 			lastBtnState = reading;
+			//跳出本次循环
 			continue;
 		}
+		//当按键为一段时间内稳定之后，进行下面的动作
 		if(millis > debounceDelay + lastDebounceTime){
+			//判断按键是否进行改变了状态
+			//只有当按键改变状态，才说明按键按下了
+			//按键一直不动，也会进入，但是不会进入下面的if语句
 			if(reading !=btnState){
 				btnState = reading;
 				
-				if(btnState == 1){
+				if(btnState == 1){ //如果按键状态是由0转1说明是按键的按下过程
 					brightness = brightness + step;
 					
 					if(brightness >= 10 || brightness <= 0){
