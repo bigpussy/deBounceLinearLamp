@@ -36,7 +36,7 @@ void main(void){
 	int btnState = 0;
 	int reading = 0;
 	int brightness = 0;
-	int step = 2;
+	int step = 3;
 	while(1){
 		millis ++; //增加一个计时器，每次脉冲都加一
 		reading = BTN;
@@ -58,17 +58,17 @@ void main(void){
 				
 				if(btnState == 1){ //如果按键状态是由0转1说明是按键的按下过程
 					brightness = brightness + step;
-					
-					if(brightness >= 10 || brightness <= 0){
-						step = - step;
+					//如果亮度大于9，则熄灭，从0开始
+					if(brightness > 9){
+						brightness = 0;
 					}
 				}
 			}
 		}
 		//通过pwm脉宽调制，将灯泡的亮度进行调整
-		if(brightness < 10){
+		if(brightness < 9){
 			LED = 1;
-			delay(10 - brightness);
+			delay(9 - brightness);
 		}
 		if(brightness > 0){
 			LED = 0;
