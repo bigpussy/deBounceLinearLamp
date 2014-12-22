@@ -7,3 +7,5 @@
 out*
 list*
 .bak
+*.uvopt
+*.bak
