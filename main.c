@@ -14,8 +14,8 @@
 
 #include <STC12C2052AD.H>
 
-sbit LED = P1 ^ 1;
-sbit BTN = P1 ^ 2;
+sbit LED = P1 ^ 2;
+sbit BTN = P1 ^ 1;
 
 //100微秒级别延时程序
 //由于使用的是12mhz晶体，因此每60次脉冲为0.00001秒，
