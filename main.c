@@ -27,7 +27,19 @@ void delay(unsigned int a){
 	}
 }
 
-
+void PWM_init(){
+	CMOD = 0x02;
+	CH = 0x00;
+	CCAPM0 = 0x42;
+	CCAP0L = 0x00;
+	CCAP0H = 0x00;
+	
+	CR = 1;
+}
+void PWM0_set(unsigned char a){
+	CCAP0L = a;
+	CCAP0H = a;
+}
 void main(void){
 	unsigned long millis = 0;
 	unsigned long lastDebounceTime;
@@ -36,7 +48,10 @@ void main(void){
 	int btnState = 0;
 	int reading = 0;
 	int brightness = 0;
-	int step = 3;
+	int step = 1;
+
+	PWM_init();
+	
 	while(1){
 		millis ++; //增加一个计时器，每次脉冲都加一
 		reading = BTN;
@@ -59,20 +74,13 @@ void main(void){
 				if(btnState == 1){ //如果按键状态是由0转1说明是按键的按下过程
 					brightness = brightness + step;
 					//如果亮度大于9，则熄灭，从0开始
-					if(brightness > 9){
+					if(brightness > 3){
 						brightness = 0;
 					}
 				}
 			}
 		}
 		//通过pwm脉宽调制，将灯泡的亮度进行调整
-		if(brightness < 9){
-			LED = 1;
-			delay(9 - brightness);
-		}
-		if(brightness > 0){
-			LED = 0;
-			delay(brightness);
-		}
+		PWM0_set(brightness * 85);
 	}
 }
